@@ -1,146 +1,33 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
-
 *{margin:0;padding:0;box-sizing:border-box;}
-
-body {
-  background:#080b0f;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:'Share Tech Mono',monospace;
-  cursor:pointer;
-  overflow:hidden;
-  user-select:none;
-}
-
-#scanline {
-  position:fixed;
-  inset:0;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);
-  pointer-events:none;
-  z-index:100;
-}
-
-#glow {
-  position:fixed;
-  inset:0;
-  background:radial-gradient(ellipse at center, rgba(180,30,60,0.04) 0%, transparent 70%);
-  pointer-events:none;
-  z-index:0;
-  transition:background 2s ease;
-}
-
-#screen {
-  position:relative;
-  z-index:10;
-  width:min(520px,92vw);
-  display:flex;
-  flex-direction:column;
-  gap:0;
-}
-
-.line {
-  font-size:clamp(12px,2.2vw,15px);
-  line-height:1.9;
-  opacity:0;
-  transition:opacity 0.1s;
-}
-
-.line.sys { color:#3a7a4a; }
-.line.sys span.tag { color:#4ade80; }
-.line.sys span.done { color:#86efac; }
-.line.arrow { color:#cc4466; }
-.line.arrow span.pkg { color:#f472b6; }
-
-.cursor {
-  display:inline-block;
-  width:9px;
-  height:1.1em;
-  background:#cc4466;
-  vertical-align:text-bottom;
-  animation:blink .7s step-end infinite;
-  margin-left:2px;
-}
+body{background:#080b0f;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:'Share Tech Mono',monospace;cursor:pointer;overflow:hidden;user-select:none;}
+#scanline{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);pointer-events:none;z-index:100;}
+#glow{position:fixed;inset:0;background:radial-gradient(ellipse at center,rgba(180,30,60,0.04) 0%,transparent 70%);pointer-events:none;z-index:0;transition:background 2s ease;}
+#screen{position:relative;z-index:10;width:min(520px,92vw);display:flex;flex-direction:column;gap:0;}
+.line{font-size:clamp(12px,2.2vw,15px);line-height:1.9;opacity:0;transition:opacity 0.1s;}
+.line.sys{color:#3a7a4a;}.line.sys span.tag{color:#4ade80;}.line.sys span.done{color:#86efac;}
+.line.arrow{color:#cc4466;}.line.arrow span.pkg{color:#f472b6;}
+.cursor{display:inline-block;width:9px;height:1.1em;background:#cc4466;vertical-align:text-bottom;animation:blink .7s step-end infinite;margin-left:2px;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-
-#btn-wrap {
-  margin-top:28px;
-  opacity:0;
-  transition:opacity 0.6s ease;
-}
-
-#decrypt-btn {
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:13px 28px;
-  background:linear-gradient(135deg,#9b1c3a,#c0394f,#9b1c3a);
-  border:1.5px solid rgba(240,100,130,0.5);
-  color:#fff0f3;
-  font-family:'Share Tech Mono',monospace;
-  font-size:clamp(13px,2.5vw,16px);
-  letter-spacing:0.08em;
-  cursor:pointer;
-  position:relative;
-  overflow:hidden;
-  transition:all 0.3s ease;
-}
-
-#decrypt-btn::before {
-  content:'';
-  position:absolute;
-  inset:0;
-  background:rgba(255,255,255,0.07);
-  transform:scaleX(0);
-  transform-origin:left;
-  transition:transform 0.4s ease;
-}
+#btn-wrap{margin-top:28px;opacity:0;transition:opacity 0.6s ease;}
+#decrypt-btn{display:inline-flex;align-items:center;gap:10px;padding:13px 28px;background:linear-gradient(135deg,#9b1c3a,#c0394f,#9b1c3a);border:1.5px solid rgba(240,100,130,0.5);color:#fff0f3;font-family:'Share Tech Mono',monospace;font-size:clamp(13px,2.5vw,16px);letter-spacing:0.08em;cursor:pointer;position:relative;overflow:hidden;transition:all 0.3s ease;}
+#decrypt-btn::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,0.07);transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease;}
 #decrypt-btn:hover::before{transform:scaleX(1);}
 #decrypt-btn:hover{border-color:rgba(240,100,130,0.9);box-shadow:0 0 20px rgba(180,40,80,0.4);}
-
 .lock-icon{font-size:17px;}
-
-.hint {
-  margin-top:14px;
-  font-size:11px;
-  color:rgba(200,100,120,0.4);
-  letter-spacing:0.15em;
-  text-align:center;
-}
-
-#intro { width:100%; }
-
-#heart-stage {
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  opacity:0;
-  pointer-events:none;
-  z-index:20;
-  transition:opacity 0.8s ease;
-}
+.hint{margin-top:14px;font-size:11px;color:rgba(200,100,120,0.4);letter-spacing:0.15em;text-align:center;}
+#intro{width:100%;}
+#heart-stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;z-index:20;transition:opacity 0.8s ease;}
 #heart-stage.show{opacity:1;pointer-events:all;}
-
-.iloveyou {
-  position:absolute;
-  font-family:'Share Tech Mono',monospace;
-  color:#f472b6;
-  opacity:0;
-  transform:scale(0) rotate(var(--r));
-  transition:opacity 0.6s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1);
-  white-space:nowrap;
-  pointer-events:none;
-  text-shadow:0 0 8px rgba(244,114,182,0.5);
-}
+.iloveyou{position:absolute;font-family:'Share Tech Mono',monospace;color:#f472b6;opacity:0;transform:scale(0) rotate(var(--r));transition:opacity 0.6s ease,transform 0.8s cubic-bezier(0.16,1,0.3,1);white-space:nowrap;pointer-events:none;text-shadow:0 0 8px rgba(244,114,182,0.5);}
 .iloveyou.show{opacity:var(--op);transform:scale(1) rotate(var(--r));}
 </style>
 
 <div id="scanline"></div>
 <div id="glow"></div>
+
+<audio id="audio" src="https://raw.githubusercontent.com/Azizzq/Azizzq.github.io/main/0528.MP3" preload="auto"></audio>
 
 <div id="intro">
   <div id="screen">
@@ -148,9 +35,7 @@ body {
     <div class="line sys" id="l2"><span class="tag">[system]</span> <span class="done">Done</span></div>
     <div class="line arrow" id="l3">&gt; One encrypted packag<span class="pkg">e</span> found for you.<span class="cursor" id="c3"></span></div>
     <div id="btn-wrap">
-      <button id="decrypt-btn" onclick="decrypt()">
-        <span class="lock-icon">🔒</span> Decrypt Message
-      </button>
+      <button id="decrypt-btn" onclick="decrypt()"><span class="lock-icon">🔒</span> Decrypt Message</button>
       <p class="hint">( or just click anywhere )</p>
     </div>
   </div>
@@ -162,46 +47,30 @@ body {
 const delays=[0,900,1700];
 const lines=['l1','l2','l3'];
 const cursors={'l1':'c1','l3':'c3'};
-
 lines.forEach((id,i)=>{
   setTimeout(()=>{
-    const el=document.getElementById(id);
-    el.style.opacity='1';
+    document.getElementById(id).style.opacity='1';
     const cur=cursors[id];
-    if(cur){
-      setTimeout(()=>{
-        const c=document.getElementById(cur);
-        if(c)c.style.display='none';
-      },id==='l1'?700:600);
-    }
+    if(cur) setTimeout(()=>{const c=document.getElementById(cur);if(c)c.style.display='none';},id==='l1'?700:600);
   },delays[i]);
 });
-
-setTimeout(()=>{
-  document.getElementById('btn-wrap').style.opacity='1';
-},2600);
-
+setTimeout(()=>{document.getElementById('btn-wrap').style.opacity='1';},2600);
 document.body.addEventListener('click',function(e){
-  if(e.target.id!=='decrypt-btn' && document.getElementById('btn-wrap').style.opacity==='1'){
-    decrypt();
-  }
+  if(e.target.id!=='decrypt-btn'&&document.getElementById('btn-wrap').style.opacity==='1') decrypt();
 });
 
 let done=false;
 function decrypt(){
   if(done)return;
   done=true;
-
+  const audio=document.getElementById('audio');
+  audio.play().catch(()=>{});
   const intro=document.getElementById('intro');
   intro.style.transition='opacity 0.8s ease';
   intro.style.opacity='0';
   setTimeout(()=>intro.style.display='none',900);
-
-  document.getElementById('glow').style.background='radial-gradient(ellipse at center, rgba(180,30,80,0.12) 0%, transparent 70%)';
-
-  const stage=document.getElementById('heart-stage');
-  stage.classList.add('show');
-
+  document.getElementById('glow').style.background='radial-gradient(ellipse at center,rgba(180,30,80,0.12) 0%,transparent 70%)';
+  document.getElementById('heart-stage').classList.add('show');
   buildHeart();
 }
 
@@ -218,34 +87,23 @@ function heartPts(n){
 
 function buildHeart(){
   const stage=document.getElementById('heart-stage');
-  const W=window.innerWidth, H=window.innerHeight;
-  const cx=W/2, cy=H/2;
-
-  const outline=heartPts(80);
-  const mid=heartPts(48);
-  const fill=heartPts(140);
-
+  const W=window.innerWidth,H=window.innerHeight;
+  const cx=W/2,cy=H/2;
+  const outline=heartPts(80),mid=heartPts(48),fill=heartPts(140);
   const maxX=Math.max(...outline.map(p=>Math.abs(p.x)));
   const maxY=Math.max(...outline.map(p=>Math.abs(p.y)));
   const sc=Math.min((W*0.38)/maxX,(H*0.42)/maxY);
-
-  const scMid=sc*0.65;
-  const scFill=sc*0.85;
-
   const sizes=[10,11,12,13,14];
+  const pinks=['#f472b6','#fb7185','#e879a0','#f9a8d4','#ec4899'];
 
   function spawn(pts,scale,baseDelay,layer){
     pts.forEach((pt,i)=>{
-      const x=cx+pt.x*scale;
-      const y=cy+pt.y*scale;
+      const x=cx+pt.x*scale,y=cy+pt.y*scale;
       const delay=baseDelay+i*22+Math.random()*120;
       const fs=sizes[Math.floor(Math.random()*sizes.length)];
       const rot=(Math.random()-0.5)*16;
       const op=layer==='outline'?0.9:layer==='mid'?0.7:0.55+Math.random()*0.4;
-
-      const pinks=['#f472b6','#fb7185','#e879a0','#f9a8d4','#ec4899'];
       const col=pinks[Math.floor(Math.random()*pinks.length)];
-
       const el=document.createElement('div');
       el.className='iloveyou';
       el.textContent='I love you';
@@ -256,7 +114,7 @@ function buildHeart(){
   }
 
   spawn(outline,sc,200,'outline');
-  spawn(mid,scMid,outline.length*22+400,'mid');
-  spawn(fill,scFill,outline.length*22+mid.length*22+700,'fill');
+  spawn(mid,sc*0.65,outline.length*22+400,'mid');
+  spawn(fill,sc*0.85,outline.length*22+mid.length*22+700,'fill');
 }
 </script>
