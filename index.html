@@ -1,564 +1,1284 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тест по НВиТП</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ИП Куатты Күш — Тараз</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C49A2D;
+    --gold-light: #E8C96B;
+    --dark: #0E1117;
+    --dark-mid: #161B26;
+    --dark-card: #1C2333;
+    --dark-border: #2A3347;
+    --text-main: #EEF0F5;
+    --text-muted: #8A94A8;
+    --accent: #3A8FD4;
+  }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #8B4513 0%, #5D3A1A 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            padding: 30px;
-            max-width: 800px;
-            width: 100%;
-            text-align: center;
-        }
+  html { scroll-behavior: smooth; }
 
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-size: 28px;
-        }
+  body {
+    background: var(--dark);
+    color: var(--text-main);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
 
-        .subtitle {
-            color: #7f8c8d;
-            margin-bottom: 30px;
-            font-size: 16px;
-        }
+  /* ─── HEADER ─── */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 18px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--dark-border);
+  }
 
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 25px;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
 
-        .stat-item {
-            color: #2c3e50;
-        }
+  .logo-emblem {
+    width: 40px; height: 40px;
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--gold);
+    font-weight: 700;
+  }
 
-        .stat-value {
-            color: #e74c3c;
-            font-size: 24px;
-        }
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+  }
 
-        .question-card {
-            background: #ffffff;
-            border: 2px solid #e9ecef;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            text-align: left;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+  .logo-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--text-main);
+  }
 
-        .question-text {
-            font-size: 18px;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            line-height: 1.5;
-            font-weight: 500;
-        }
+  .logo-sub {
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
 
-        .options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+  nav {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    align-items: center;
+  }
 
-        .option {
-            padding: 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 16px;
-        }
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: color 0.3s;
+  }
 
-        .option:hover {
-            background: #f8f9fa;
-            border-color: #8B4513;
-        }
+  nav a:hover { color: var(--gold); }
 
-        .option.selected {
-            background: #8B4513;
-            color: white;
-            border-color: #8B4513;
-        }
+  .header-cta {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 9px 22px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'IBM Plex Sans', sans-serif;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
 
-        .option.correct {
-            background: #27ae60;
-            color: white;
-            border-color: #27ae60;
-        }
+  .header-cta:hover {
+    background: var(--gold);
+    color: var(--dark);
+  }
 
-        .option.incorrect {
-            background: #e74c3c;
-            color: white;
-            border-color: #e74c3c;
-        }
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 0 60px;
+  }
 
-        .controls {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 20px;
-        }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(196,154,45,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 80% at 10% 80%, rgba(58,143,212,0.05) 0%, transparent 50%),
+      linear-gradient(135deg, #0E1117 0%, #161B26 100%);
+  }
 
-        button {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+  .hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(196,154,45,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(196,154,45,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
 
-        .submit-btn {
-            background: #8B4513;
-            color: white;
-            flex: 1;
-        }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
 
-        .submit-btn:hover:not(:disabled) {
-            background: #5D3A1A;
-            transform: translateY(-2px);
-        }
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
 
-        .submit-btn:disabled {
-            background: #bdc3c7;
-            cursor: not-allowed;
-            transform: none;
-        }
+  .hero-eyebrow-line {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
 
-        .next-btn {
-            background: #27ae60;
-            color: white;
-            flex: 1;
-        }
+  .hero-eyebrow span {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
 
-        .next-btn:hover {
-            background: #219652;
-            transform: translateY(-2px);
-        }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 6vw, 72px);
+    line-height: 1.1;
+    font-weight: 700;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
 
-        .restart-btn {
-            background: #e74c3c;
-            color: white;
-            margin-top: 15px;
-        }
+  h1 em {
+    font-style: normal;
+    color: var(--gold);
+  }
 
-        .restart-btn:hover {
-            background: #c0392b;
-            transform: translateY(-2px);
-        }
+  .hero-desc {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin-bottom: 44px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
 
-        .result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 16px;
-            display: none;
-        }
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
 
-        .result.correct {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    padding: 14px 34px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
 
-        .result.incorrect {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
+  .btn-primary:hover { background: var(--gold-light); }
 
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 4px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
+  .btn-outline {
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--dark-border);
+    padding: 14px 34px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'IBM Plex Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
 
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, #8B4513, #27ae60);
-            transition: width 0.3s ease;
-            width: 0%;
-        }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
-        .completion-message {
-            display: none;
-            background: #27ae60;
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
+  .hero-stats {
+    position: absolute;
+    right: 60px;
+    bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeIn 1s 1s forwards;
+  }
 
-        .question-counter {
-            font-size: 14px;
-            color: #7f8c8d;
-            margin-bottom: 10px;
-        }
-    </style>
+  .stat-item {
+    text-align: right;
+    border-right: 2px solid var(--gold);
+    padding-right: 18px;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 100px 60px;
+  }
+
+  .section-header {
+    margin-bottom: 60px;
+  }
+
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .section-tag::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .section-tag span {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-main);
+  }
+
+  h2 em { font-style: normal; color: var(--gold); }
+
+  /* ─── ABOUT ─── */
+  #about {
+    background: var(--dark-mid);
+    border-top: 1px solid var(--dark-border);
+    border-bottom: 1px solid var(--dark-border);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-text p {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .about-details {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .detail-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    background: var(--dark-card);
+    border-left: 3px solid var(--gold);
+  }
+
+  .detail-row svg { flex-shrink: 0; margin-top: 2px; }
+
+  .detail-row-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .detail-row-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .detail-row-value {
+    font-size: 14px;
+    color: var(--text-main);
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    padding: 40px;
+    position: relative;
+  }
+
+  .about-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  .about-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    margin-bottom: 24px;
+    color: var(--text-main);
+  }
+
+  .value-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .value-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .value-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .value-item p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ─── SERVICES ─── */
+  #services {
+    background: var(--dark);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--dark-border);
+    border: 1px solid var(--dark-border);
+  }
+
+  .service-card {
+    background: var(--dark);
+    padding: 40px 32px;
+    transition: background 0.3s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+
+  .service-card:hover::after { width: 100%; }
+  .service-card:hover { background: var(--dark-card); }
+
+  .service-icon {
+    width: 48px; height: 48px;
+    border: 1px solid var(--dark-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    transition: border-color 0.3s;
+  }
+
+  .service-card:hover .service-icon { border-color: var(--gold); }
+
+  .service-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: var(--text-main);
+  }
+
+  .service-card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--dark-mid);
+    border-top: 1px solid var(--dark-border);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+
+  .contact-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 32px;
+  }
+
+  .contact-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .contact-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .contact-icon {
+    width: 40px; height: 40px;
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-item-text span {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .contact-item-text p {
+    font-size: 14px;
+    color: var(--text-main);
+    line-height: 1.6;
+  }
+
+  .contact-form-area h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 32px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    color: var(--text-main);
+    padding: 14px 18px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--text-muted);
+  }
+
+  .form-group textarea {
+    height: 110px;
+    resize: none;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 32px 60px;
+    border-top: 1px solid var(--dark-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer p {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  .footer-gold {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ─── CHATBOT ─── */
+  #chat-btn {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 200;
+    width: 58px;
+    height: 58px;
+    background: var(--gold);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 24px rgba(196,154,45,0.4);
+    transition: all 0.3s;
+  }
+
+  #chat-btn:hover {
+    background: var(--gold-light);
+    box-shadow: 0 6px 32px rgba(196,154,45,0.6);
+    transform: translateY(-2px);
+  }
+
+  #chat-window {
+    position: fixed;
+    bottom: 104px;
+    right: 32px;
+    z-index: 199;
+    width: 370px;
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    display: none;
+    flex-direction: column;
+    max-height: 520px;
+    animation: chatIn 0.3s ease;
+  }
+
+  #chat-window.open { display: flex; }
+
+  @keyframes chatIn {
+    from { opacity: 0; transform: translateY(10px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .chat-header {
+    padding: 18px 20px;
+    background: var(--dark-mid);
+    border-bottom: 1px solid var(--dark-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .chat-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .chat-avatar {
+    width: 36px;
+    height: 36px;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark);
+  }
+
+  .chat-header-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chat-header-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .chat-header-status {
+    font-size: 11px;
+    color: #4CAF50;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .chat-header-status::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    background: #4CAF50;
+    border-radius: 50%;
+  }
+
+  #chat-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 4px;
+    transition: color 0.2s;
+  }
+
+  #chat-close:hover { color: var(--text-main); }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--dark-border) transparent;
+  }
+
+  .msg {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  .msg.bot { align-self: flex-start; max-width: 90%; }
+  .msg.user { align-self: flex-end; flex-direction: row-reverse; max-width: 90%; }
+
+  .msg-bubble {
+    padding: 12px 16px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .msg.bot .msg-bubble {
+    background: var(--dark-mid);
+    border: 1px solid var(--dark-border);
+    color: var(--text-main);
+  }
+
+  .msg.user .msg-bubble {
+    background: var(--gold);
+    color: var(--dark);
+    font-weight: 500;
+  }
+
+  .chat-quick {
+    padding: 12px 16px;
+    border-top: 1px solid var(--dark-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chat-quick-label {
+    width: 100%;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .quick-btn {
+    background: var(--dark);
+    border: 1px solid var(--dark-border);
+    color: var(--text-muted);
+    padding: 7px 12px;
+    font-size: 12px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .quick-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(196,154,45,0.05);
+  }
+
+  .chat-input-row {
+    padding: 14px 16px;
+    border-top: 1px solid var(--dark-border);
+    display: flex;
+    gap: 10px;
+  }
+
+  #chat-input {
+    flex: 1;
+    background: var(--dark);
+    border: 1px solid var(--dark-border);
+    color: var(--text-main);
+    padding: 10px 14px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  #chat-input:focus { border-color: var(--gold); }
+  #chat-input::placeholder { color: var(--text-muted); }
+
+  #chat-send {
+    background: var(--gold);
+    border: none;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+
+  #chat-send:hover { background: var(--gold-light); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--dark-border); }
+
+  /* ─── MAP PLACEHOLDER ─── */
+  .map-placeholder {
+    width: 100%;
+    height: 200px;
+    background: var(--dark);
+    border: 1px solid var(--dark-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+    gap: 10px;
+  }
+
+  .map-placeholder p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .map-placeholder a {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 2px;
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>📚 Тест по НВиТП</h1>
-        <div class="subtitle">Начальная военная и технологическая подготовка</div>
 
-        <div class="stats">
-            <div class="stat-item">
-                Пройдено <span class="stat-value" id="answered">0</span>
-            </div>
-            <div class="stat-item">
-                Правильно <span class="stat-value" id="correct">0</span>
-            </div>
-            <div class="stat-item">
-                Неправильно <span class="stat-value" id="incorrect">0</span>
-            </div>
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="logo">
+    <div class="logo-emblem">КК</div>
+    <div class="logo-text">
+      <span class="logo-name">Куатты Күш</span>
+      <span class="logo-sub">г. Тараз · Казахстан</span>
+    </div>
+  </div>
+  <nav>
+    <a href="#about">О нас</a>
+    <a href="#services">Услуги</a>
+    <a href="#contact">Контакты</a>
+  </nav>
+  <a href="#contact" class="header-cta">Связаться</a>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span>ИП Куатты Күш · Официальный сайт</span>
+    </div>
+    <h1>Ваш надёжный<br>деловой <em>партнёр</em><br>в Тарázе</h1>
+    <p class="hero-desc">
+      Профессиональная деятельность на рынке Казахстана. Качество, ответственность и долгосрочное сотрудничество — основа нашей работы.
+    </p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">Наши услуги</a>
+      <a href="#contact" class="btn-outline">Связаться с нами</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Ответственность</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">ИП</div>
+      <div class="stat-label">Официальная регистрация</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">KZ</div>
+      <div class="stat-label">Тараз, Казахстан</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-header">
+        <div class="section-tag"><span>О компании</span></div>
+        <h2>ИП <em>Куатты Күш</em></h2>
+      </div>
+      <p>
+        ИП «Куатты Күш» — индивидуальное предприятие, осуществляющее деятельность в городе Тараз, Жамбылская область, Республика Казахстан. Мы работаем в соответствии с законодательством РК и ставим в приоритет интересы наших клиентов и партнёров.
+      </p>
+      <p>
+        Наша цель — предоставлять услуги высокого уровня, выстраивать долгосрочные отношения с клиентами и вносить вклад в развитие местной экономики.
+      </p>
+
+      <div class="about-details">
+        <div class="detail-row">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#C49A2D" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+          </svg>
+          <div class="detail-row-text">
+            <span class="detail-row-label">Адрес</span>
+            <span class="detail-row-value">г. Тараз, 2-й проезд Рахимова, д. 1А</span>
+          </div>
         </div>
-
-        <div class="progress-bar">
-            <div class="progress" id="progress"></div>
+        <div class="detail-row">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#C49A2D" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+          </svg>
+          <div class="detail-row-text">
+            <span class="detail-row-label">Телефон</span>
+            <span class="detail-row-value">Уточняйте через форму обратной связи</span>
+          </div>
         </div>
-
-        <div class="question-counter" id="question-counter">Вопрос 1 из 200</div>
-
-        <div id="question-card" class="question-card">
-            <div class="question-text" id="question-text">Загрузка вопросов...</div>
-            <div class="options-container" id="options-container"></div>
+        <div class="detail-row">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#C49A2D" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253"/>
+          </svg>
+          <div class="detail-row-text">
+            <span class="detail-row-label">Регион</span>
+            <span class="detail-row-value">Жамбылская область, Казахстан</span>
+          </div>
         </div>
-
-        <div id="result" class="result"></div>
-
-        <div class="controls">
-            <button id="submit-btn" class="submit-btn" disabled>Подтвердить ответ</button>
-            <button id="next-btn" class="next-btn" style="display: none;">Следующий вопрос</button>
-        </div>
-
-        <div id="completion-message" class="completion-message">
-            <h2>🎉 Поздравляем!</h2>
-            <p>Вы ответили на все вопросы!</p>
-            <p>Правильных ответов: <span id="final-correct">0</span> из <span id="total-questions">200</span></p>
-            <button class="restart-btn" onclick="restartQuiz()">Начать заново</button>
-        </div>
+      </div>
     </div>
 
-    <script>
-        // Все вопросы по НВиТП (объединены в один массив)
-        const allQuestions = [
-            // Вопросы 1-15 (Конституционные основы, Воинские символы, Экстремизм)
-            {question: "С какими государствами граничит Республика Казахстан?", options: ["Россия, Китай, Узбекистан, Таджикистан, Туркменистан", "Россия, Китай, Узбекистан, Кыргызстан, Туркменистан", "Россия, Китай, Узбекистан, Азербайджан, Туркменистан", "Россия, Китай, Узбекистан, Афганистан, Туркменистан"], correct: 1},
-            {question: "Когда была принята Конституция Республики Казахстан?", options: ["30 августа 1995 года", "1 декабря 1995 года", "25 октября 1995 года", "16 декабря 1995 года"], correct: 0},
-            {question: "Казахстан по Закону 'О Государственной границе Республики Казахстан' свою территорию (на суше, в водном и воздушном пространстве) охраняет:", options: ["Пограничной службой", "Вооруженными силами", "Национальной гвардией", "Территориальной обороной"], correct: 1},
-            {question: "По своему назначению и содержанию основным средством отражения агрессии против Казахстана являются:", options: ["Пограничная служба", "Вооруженные силы", "Национальная гвардия", "Формирования Территориальной обороны"], correct: 1},
-            {question: "В состав Вооруженных сил РК входят:", options: ["Сухопутные войска", "Военно-воздушные силы", "Военно-морские силы", "Все вышеперечисленное"], correct: 3},
-            {question: "Боевое знамя воинской части является символом:", options: ["воинской чести, доблести и славы", "военной истории воинского подразделения", "доказательством достижений по боевой подготовке", "успехов военнослужащих на боевых учениях"], correct: 0},
-            {question: "Боевое знамя сохраняется за воинской частью?", options: ["на все время, на период изменения ее наименования и нумерации", "на все время, независимо от изменения ее наименования и нумерации", "на все время, до изменения наименования части", "на все время, до изменения нумерации части"], correct: 1},
-            {question: "Боевое знамя находится со своей воинской частью:", options: ["при всех условиях и обстоятельствах особого времени", "при всех условиях и обстоятельствах мирного времени", "при всех условиях и обстоятельствах военного времени", "при всех условиях и обстоятельствах мирного и военного времени"], correct: 3},
-            {question: "Военная присяга утверждена Указом Президента Республики Казахстан:", options: ["25 августа 1992 года", "25 августа 1991 года", "25 августа 1993 года", "25 августа 1994 года"], correct: 0},
-            {question: "Стать настоящим воином сегодня --- значит в первую очередь быть:", options: ["послушным", "дисциплинированным", "покорным", "кротким"], correct: 1},
-            {question: "Экстремизм --- это форма политической деятельности,...", options: ["которая прямо отрицает принципы демократии и основана на практике нетерпимости", "которая отрицает принципы демократии и основана на идеологии нетерпимости", "которая прямо или косвенно отрицает принципы парламентской демократии и основана на идеологии и практике нетерпимости", "которая отрицает принципы парламентаризма и основана на нетерпимости"], correct: 2},
-            {question: "Экстремизм в любом своем проявлении является:", options: ["политическим", "экономическим", "демографическим", "экологическим"], correct: 0},
-            {question: "Экстремисты ведут политическую борьбу с целью:", options: ["подрыва партийной деятельности действующей власти силовыми методами", "подрыва деятельности политических властей силовыми методами", "подрыва внутриполитической стабильности государства силовыми методами", "подрыва деятельности действующей власти силовыми методами"], correct: 2},
-            {question: "Нарушение общественного порядка и законов всегда угрожает:", options: ["безопасности государства и жизни мирного населения", "безопасности государства и жизни населения на селе", "безопасности государства и жизни мирного населения в городах", "безопасности государства и жизни мирного население на улицах"], correct: 0},
-            {question: "Эффективная борьба с экстремизмом и терроризмом возможна только:", options: ["путем объединения усилий международных организаций", "путем объединения усилий всех государств на уровне спецслужб", "путем оказания гуманитарной помощи гражданскому населению", "путем объединения усилий всего международного сообщества"], correct: 3},
-            
-            // Вопросы 16-31 (Общевоинские уставы, Военнослужащие, Воинская дисциплина)
-            {question: "Выполнение положений Общевоинских уставов обязательно:", options: ["для всех военнослужащих частей, кораблей и подразделений Национальной гвардии, других войск и воинских формирований РК", "для всех военнослужащих частей, кораблей и подразделений ВС, других войск и воинских формирований РК", "для всех военнослужащих частей, кораблей и подразделений Пограничной службы, других войск и воинских формирований РК", "для всех военнослужащих частей, кораблей и подразделений Военно-морских сил, других войск и воинских формирований РК"], correct: 1},
-            {question: "Военнослужащий обязан:", options: ["быть патриотом своей Родины, защищать интересы государства, крепить дружбу между военнослужащими", "требовать продвижения по службе, добросовестного исполнения своих должностных обязанностей", "поступать в военные учебные заведения и другие организации образования, проходить курсовую подготовку", "требовать охраны своего здоровья и создания условий для службы"], correct: 0},
-            {question: "Военнослужащий обязан:", options: ["сохранять и укреплять свое здоровье, соблюдать требования безопасности воинской службы", "овладевать военными профессиональными знаниями, совершенствовать своё воинское мастерство", "в объеме предоставленных ему прав и обязанностей принимать меры к наведению уставного порядка", "обращаться к своему непосредственному начальнику и с его разрешения к следующему по команде начальнику"], correct: 1},
-            {question: "Старшими по воинскому званию являются:", options: ["сержант", "сержант первого класса", "мастер сержант", "штаб сержант"], correct: 2},
-            {question: "Старшими по воинскому званию являются:", options: ["старший лейтенант", "майор", "капитан", "подполковник"], correct: 3},
-            {question: "Старшими по воинскому званию являются:", options: ["контр-адмирал", "генерал-лейтенант", "генерал армии", "генерал-полковник"], correct: 2},
-            {question: "Единоначалие является основным принципом...", options: ["строительства ВС, руководства ими и взаимоотношений между военнослужащими", "строительства взаимоотношений между военнослужащими", "строительства других войск и воинских формирований", "строительства взаимодействия между подразделениями"], correct: 0},
-            {question: "Подчиненность военнослужащих в Вооруженных силах определяется:", options: ["в соответствии с указанием старшего начальника", "сроком прохождения воинской службы", "служебным положением или воинским званием", "наличием у военнослужащего поощрений и наград"], correct: 2},
-            {question: "Прямыми начальниками для военнослужащих являются:", options: ["начальники, ближайшие к подчиненным по службе", "начальники, которым военнослужащие подчинены по службе, хотя бы и временно", "начальники, старшие по воинскому званию", "начальники, старшие по должности"], correct: 1},
-            {question: "Как должен быть сформулирован приказ?", options: ["правильно и четко, всесторонне должен быть обдуман и не должен вызывать сомнения у подчиненного", "в соответствии с уставом и законами РК, понятно для подчиненных, без необходимости дополнительного инструктажа", "кратко и ясно, не допускать двоякого толкования, не вызывать сомнений у подчиненного", "точно и кратко, не вызывать сомнений у подчиненного"], correct: 2},
-            {question: "Приказ - это...", options: ["требование командира (начальника) о выполнении или прекращении каких-либо действий по службе", "письменный документ служебного характера, органов военного управления", "форма доведения служебных задач до подчиненного личного состава воинских подразделений и частей", "форма доведения задач до подчиненного личного состава воинских подразделений и частей частного характера"], correct: 0},
-            {question: "Каков порядок выполнения приказа?", options: ["беспрекословно, точно и в срок", "своевременно", "в кратчайшие сроки", "немедленно"], correct: 0},
-            {question: "Воинская дисциплина является одним из главных условий обеспечения...", options: ["мобилизационной готовности войск", "готовности войск к учениям", "готовности войск к военным играм", "боевой готовности войск"], correct: 3},
-            {question: "Воинская дисциплина обязывает каждого военнослужащего:", options: ["стойко переносить трудности воинской службы", "стойко переносить трудности гражданской службы", "стойко переносить трудности пограничной службы", "стойко переносить трудности дежурной службы"], correct: 0},
-            {question: "Командиры обязаны повседневно поддерживать в воинских частях, на кораблях и в подразделениях воинскую дисциплину, строго руководствуясь...", options: ["требованиями законодательства, общевоинских уставов, указов командиров вышестоящих органов военного управления", "требованиями законодательства, общевоинских уставов, приказов командиров вышестоящих органов военного управления", "требованиями законодательства, общевоинских уставов, распоряжений командиров вышестоящих органов военного управления", "требованиями законодательства, общевоинских уставов, постановлений командиров вышестоящих органов военного управления"], correct: 1},
-            {question: "Воинская дисциплина есть:", options: ["строгое и точное соблюдение военнослужащими принятых обязательств, требований общевоинских уставов, других нормативных актов и приказов командиров", "строгое и точное соблюдение военнослужащими правил, установленных в подразделении части общевоинскими уставами, другими нормативными правовыми актами и приказами командиров", "строгое и точное соблюдение военнослужащими правил, установленных законами, общевоинскими уставами, другими нормативными правовыми актами и приказами командиров", "строгое и точное соблюдение военнослужащими принятых обязательств, требований общевоинских уставов, других нормативно-правовых актов, указаний командиров"], correct: 2},
-            {question: "С какого момента гражданин приобретает статус военнослужащего?", options: ["Со дня убытия в военный комиссариат", "Со дня убытия из военного комиссариата", "Со дня убытия из дома к месту службы", "Со дня убытия из военного взвода"], correct: 0},
-            
-            // Вопросы 33-46 (Тактическая подготовка)
-            {question: "Тактическая подготовка --- это:", options: ["обучение личного состава подразделений", "обучение рядового состава военного управления", "обучение оперативного звена офицеров", "обучение сержантского состава подразделений"], correct: 0},
-            {question: "Мотострелковое отделение --- это:", options: ["первичное специальное подразделение в вооруженных силах", "первичное техническое подразделение в вооруженных силах", "первичное инженерное подразделение в вооруженных силах", "первичное тактическое подразделение в вооруженных силах"], correct: 3},
-            {question: "Мотострелковые подразделения (отделения) являются:", options: ["тактическими", "техническими", "инженерными", "специальными"], correct: 0},
-            {question: "БМП-2 предназначена для:", options: ["размещения офицерского и сержантского состава взвода, передвижения и ведения боя", "размещения сержантского и рядового состава отделения, передвижения и ведения боя", "размещения личного состава отделения, передвижения и ведения боя", "размещения инженерно-технического состава взвода, передвижения и ведения боя"], correct: 2},
-            {question: "Огонь из всех видов оружия является:", options: ["основным средством удержания противника в бою", "основным средством уничтожения противника в бою", "основным средством окружения противника в бою", "основным средством обхода противника в бою"], correct: 1},
-            {question: "Сосредоточенный огонь --- это:", options: ["огонь из оружия и боевой техники, ведущийся одновременно по подразделениям противника", "огонь стрелкового оружия, ведущийся одновременно по разным огневым средствам", "огонь стрелкового оружия, гранатометов, вооружения боевых машин пехоты, ведущийся несколькими подразделениями", "огонь из автоматов и пистолетов по противнику"], correct: 2},
-            {question: "Систему огня составляют:", options: ["огневые средства подразделений, применяемые в бою по плану командира", "огневые средства частей, применяемые в бою по плану командира", "огневые средства соединений, применяемые в операциях по плану командира", "технические средства подразделений, применяемые в бою по плану командира"], correct: 0},
-            {question: "Система огня должна обеспечить возможность:", options: ["ведения огня на дальних подступах противника", "ведения контрнаступления", "ведения круговой обороны", "ведения наступления на противника"], correct: 2},
-            {question: "При организации системы огня подразделению (отделению) назначается:", options: ["полоса огня, дополнительный сектор обстрела (вправо или влево)", "полоса огня, дополнительный сектор обстрела (справа налево)", "полоса огня, дополнительный сектор обстрела (слева направо)", "полоса огня, дополнительный сектор для наблюдения (вправо и влево)"], correct: 0},
-            {question: "Огневым средством (БМП, БТР, пулемет) определяются:", options: ["основные огневые позиции и указываются дополнительные сектора обстрела на дальность их действительного огня", "основные и запасные огневые позиции и указываются основной и дополнительные сектора обстрела на дальность их действительного огня", "основные и запасные огневые позиции и указываются сектора обстрела на дальность их действительного огня", "запасные огневые позиции и указываются дополнительные сектора обстрела на дальность их действительного огня"], correct: 1},
-            {question: "Огонь из гранатомета подготавливается:", options: ["в полосе огня взвода", "в полосе огня роты", "в полосе огня дополнительного сектора", "в полосе огня отделения"], correct: 3},
-            {question: "Полосы огня и секторы обстрела соседних подразделений и огневых средств должны:", options: ["взаимно перегораживать", "взаимно превосходить", "взаимно перекрываться", "взаимно заграждать"], correct: 2},
-            {question: "Готовность системы огня определяется:", options: ["занятием огневыми средствами позиций, подготовкой сведений для стрельбы и наличием боеприпасов", "занятием личным составом позиций, подготовкой сведений для стрельбы и наличием боеприпасов", "занятием транспортных средств позиций, подготовкой сведений для стрельбы и наличием боеприпасов", "занятием своих позиций командирами, подготовкой сведений для стрельбы и наличием боеприпасов"], correct: 0},
-            {question: "Командир отделения составляет карточку огня своего отделения:", options: ["для удобства сосредоточения огня отделения в наступательном бою", "для удобства управления огнем отделения в обороне", "для удобства указания направления огня отделения в окружении противника", "для удобства управления огнем взвода в ночное время"], correct: 1},
-            {question: "Карточка огня отделения является:", options: ["боевым графическим документом, составляется командиром отделения", "боевым графическим документом, составляется пулеметчиком отделения", "боевым графическим документом, составляется наблюдателем отделения", "боевым графическим документом, составляется гранатометчиком отделения"], correct: 0},
-            
-            // Вопросы 47-63 (Огневая подготовка, АК-74, меры безопасности)
-            {question: "Одной из важных мер безопасности при действиях с оружием является:", options: ["взяв автомат, необходимо убедиться в отсутствии гильзы в патроннике и посторонних предметов в канале ствола", "взяв автомат, необходимо убедиться в отсутствии патрона в патроннике и посторонних предметов в канале ствола", "взяв автомат, необходимо убедиться в отсутствии патрона в патроннике и необходимых для чистки предметов в канале ствола", "взяв автомат, необходимо убедиться в отсутствии патрона в магазине и посторонних предметов в подсумке для магазина"], correct: 1},
-            {question: "Одним из важных мер безопасности при действиях с оружием является:", options: ["обучение разборке и сборке автомата должно производиться только на учебных местах", "обучение разборке и сборке автомата должно производиться только на специально отведенных местах", "обучение разборке и сборке автомата должно производиться только под наблюдением сержанта", "обучение разборке и сборке автомата должно производиться только на учебных автоматах"], correct: 3},
-            {question: "Личный состав, не усвоивший меры безопасности:", options: ["к стрельбе и обслуживанию стрельбы не допускается", "к выполнению нормативов не допускается", "на огневую позицию не допускается", "не допускается к получению боеприпасов и оружия"], correct: 0},
-            {question: "АК-74 предназначен:", options: ["для поражения живой силы и уничтожения огневых средств противника", "для поражения противника в рукопашном бою", "для уничтожения и поражения живой силы противника", "для уничтожения живой силы и поражения огневых средств противника"], correct: 3},
-            {question: "Какой темп стрельбы из АК-74?", options: ["600 выстрелов в минуту", "500 выстрелов в минуту", "400 выстрелов в минуту", "700 выстрелов в минуту"], correct: 0},
-            {question: "Масса АК-74 со снаряженным магазином, кг.:", options: ["3,3 кг.", "3,6 кг.", "3,8 кг.", "3,2 кг"], correct: 1},
-            {question: "Боевая скорострельность АК-74, выстрел в минуту, одиночным --- автоматическим:", options: ["40--100", "60--100", "40--80", "50--100"], correct: 0},
-            {question: "Источниками или носителями опасности стрелкового оружия (АК-74) являются:", options: ["крышка ствольной коробки", "прицельная мушка", "затвор", "летящая пуля"], correct: 3},
-            {question: "Источниками или носителями опасности стрелкового оружия (АК-74) являются:", options: ["продукты сгорания порохового заряда, накапливающиеся при длительной стрельбе в закрытом помещении", "ствол со ствольной коробкой, прицельным приспособлением и пистолетной рукояткой приклада", "возвратный механизм", "ударно-спусковой механизм"], correct: 0},
-            {question: "Источниками или носителями опасности стрелкового оружия (АК-74) являются:", options: ["магазин автомата (пулемета)", "затворная рама с газовым поршнем", "струя раскаленных газов, вылетающая при выстреле из дульной части канала ствола и дульного тормоза", "газовая трубка со ствольной накладкой"], correct: 2},
-            {question: "Наиболее действенный огонь по наземным целям из автомата АК-74:", options: ["у автомата --- на дальность до 700 м", "у автомата --- на дальность до 600 м", "у автомата --- на дальность до 500 м", "у автомата --- на дальность до 400 м"], correct: 2},
-            {question: "Дальность прямого выстрела (АК-74):", options: ["у автомата по «грудной фигуре» --- 740 м", "у автомата по «грудной фигуре» --- 640 м", "у автомата по «грудной фигуре» --- 540 м", "у автомата по «грудной фигуре» --- 440 м"], correct: 3},
-            {question: "Прицельное приспособление служит:", options: ["для наводки автомата (пулемета) при стрельбе по целям на различную дальность и имеет прицел и мушку", "для ведения огня из автомата (пулемета) на дальность по вертикали по неподвижным целям", "для приклада автомата (пулемета) при стрельбе по целям на различную дальность и имеет мушку", "для удержания автомата (пулемета) при стрельбе по целям на различную дальность и имеет прицел"], correct: 0},
-            {question: "Ствольная накладка служит:", options: ["для предохранения автоматчика (пулеметчика) от отдачи при стрельбе", "для удержания автоматчиком (пулеметчиком) оружия при стрельбе автоматическим огнем", "для предохранения рук автоматчика (пулеметчика) от ожогов при стрельбе", "для удержания автоматчиком (пулеметчиком) оружия при стрельбе одиночным огнем"], correct: 2},
-            {question: "Где должно храниться оружие в подразделении?", options: ["в комнате для хранения оружия, в пирамидах", "под кроватями", "под подушками", "в каптерке"], correct: 0},
-            {question: "У кого должны храниться ключи от комнаты для хранения оружия?", options: ["у дежурного по роте", "у командира взвода", "у командира батальона", "у командира роты"], correct: 0},
-            {question: "Чьими печатями должна опечатываться комната для хранения оружия?", options: ["командира части и командира роты", "командира роты и дежурного по роте", "дежурного по роте и дежурного по части", "старшины роты и командира роты"], correct: 2},
-            
-            // Вопросы 64-85 (Неполная разборка, патроны, гранаты)
-            {question: "Для чего применяется неполная разборка АК-74?", options: ["для чистки при сильном загрязнении и при ремонте", "для чистки, смазки и осмотра", "для чистки и смазки", "для чистки при несильном загрязнении и при ремонте"], correct: 1},
-            {question: "Порядок неполной разборки АК-74:", options: ["магазин (проверить на разряженность), шомпол, дульный тормоз-компенсатор, пенал, крышка ствольной коробки, возвратный механизм, затворная рама с газовым поршнем, газовая трубка со ствольной накладкой, затвор", "магазин (проверить на разряженность), пенал, шомпол, дульный тормоз-компенсатор, крышка ствольной коробки, возвратный механизм, затвор, газовая трубка со ствольной накладкой, затворная рама с газовым поршнем", "магазин (проверить на разряженность), пенал, шомпол, дульный тормоз-компенсатор, крышка ствольной коробки, возвратный механизм, затворная рама с газовым поршнем, затвор, газовая трубка со ствольной накладкой", "магазин (проверить на разряженность), пенал, шомпол, дульный тормоз-конденсатор, крышка ствольной коробки, возвратный механизм, затворная рама с бойком, затвор, газовая трубка со ствольной накладкой"], correct: 2},
-            {question: "Ствол предназначен для:", options: ["направления полета гильзы, имеет 4 нареза слева направо", "направления полета пули, имеет 3 нареза слева направо", "направления полета пули, имеет 4 нареза слева направо", "направления полета пули, имеет 3 нареза справа налево"], correct: 2},
-            {question: "Дульный тормоз-компенсатор автомата служит для:", options: ["повышения энергии отдачи и кучности боя", "повышения кучности боя и уменьшения энергии отдачи", "уменьшения выброса пламени", "улучшения кучности стрельбы"], correct: 1},
-            {question: "Ствольная коробка АК-74 служит для:", options: ["соединения ствола и приклада автомата", "соединения частей и механизмов автомата", "соединения частей ударно-спускового механизма автомата", "работы частей при стрельбе из автомата"], correct: 1},
-            {question: "Возвратный механизм предназначен для:", options: ["работы затворной рамы с затвором при заряжании", "возвращения затворной рамы с затвором в положение, предохраняющее стрельбу", "возвращения затворной рамы с затвором в переднее положение", "возвращения затворной рамы с газовым поршнем и затвором в заднее положение"], correct: 2},
-            {question: "Солдаты и сержанты осматривают автоматы (пулеметы):", options: ["в любое время суток", "во время полевых учений", "во время утренней зарядки", "во время чистки"], correct: 3},
-            {question: "Отвертка и выколотка (принадлежности к (пулемету) автомату) применяются:", options: ["при стрельбе из автомата (пулемета)", "при разборке и сборке автомата (пулемета)", "при чистке и смазке автомата (пулемета)", "при сдаче автомата (пулемета) на хранение на склад"], correct: 1},
-            {question: "При осмотре патронов нужно проверить:", options: ["нет ли на гильзах сырости и мокроты, не качается ли пуля в дульце гильзы", "нет ли на гильзах ржавчины и помятостей, не качается ли пуля в дульце гильзы", "нет ли на гильзах следов от пальцев, не качается ли пуля в дульце гильзы", "нет ли на гильзах лишнего постороннего предмета, не качается ли пуля в дульце гильзы"], correct: 1},
-            {question: "В принадлежности пенала АК-74 входит:", options: ["щетка, выколотка, отвертка, затирка", "щетка, отвертка, зажим, протирка", "выколотка, протирка, шомпол, закрутка", "ершик, протирка, отвертка, выколотка"], correct: 3},
-            {question: "Для чистки и смазки АК-74 применяются:", options: ["оружейная смазка, ветошь или бумага", "оружейное масло, ружейная жидкость", "оружейная смазка, раствор РЧС, ветошь или бумага КВ-27", "жидкая оружейная смазка, ружейная смазка, раствор РЧС, ветошь или бумага КВ-22, пакля"], correct: 3},
-            {question: "Причины задержки при стрельбе из АК-74 --- это:", options: ["неподача патрона, утыкание патрона, осечка, неизвлечение гильзы, недолет пули до цели, неотход затворной рамы в переднее положение", "неподача патрона, утыкание патрона, осечка, неизвлечение гильзы, прихват или неотражение гильзы, неотход затворной рамы в переднее положение", "утыкание патрона, неизвлечение гильзы, осечка, отход затворной рамы в переднее положение", "прихват или неотражение гильзы, отход затворной рамы в переднее положение, недолет пули до цели, подача патрона"], correct: 1},
-            {question: "Ручные осколочные гранаты предназначаются для:", options: ["поражения осколками живой силы противника в ближнем бою", "поражения осколками боевой техники противника в бою", "поражения осколками живой силы противника гранатометом", "поражения осколками противника в дальнем бою"], correct: 0},
-            {question: "Ручные гранаты РГД-5 и РГН относятся:", options: ["к оборонительным", "к отступательным", "к наступательным", "к трассирующим"], correct: 2},
-            {question: "Что не является боевым свойством АК-74?", options: ["начальная скорость пули", "вид материала приклада", "скорострельность", "прицельная дальность"], correct: 1},
-            {question: "Что не является основной частью АК-74?", options: ["магазин", "приклад", "крышки ствольной коробки", "возвратный механизм"], correct: 2},
-            {question: "Что такое калибр?", options: ["внутренний диаметр ствола", "количество нарезов в стволе", "промежутки между нарезами", "внешний диаметр ствола"], correct: 0},
-            {question: "Что не является боевым свойством ПМ?", options: ["калибр оружия", "вид материала ручки", "прицельная дальность", "скорострельноть"], correct: 1},
-            {question: "Что не является основной частью ПМ?", options: ["магазин", "спусковой крючок", "возвратный механизм", "глушитель"], correct: 3},
-            {question: "Что не является основной характеристикой ручной осколочной гранаты?", options: ["средняя дальность броска", "радиус разлета убойных осколков", "время горения замедлителя запала", "материал оболочки"], correct: 0},
-            {question: "Чем отличается ручная граната РГ-42 от РГД-5 ?", options: ["корпусом", "металлической лентой", "трубкой для запала", "разрывным зарядом"], correct: 1},
-            {question: "Что нельзя делать при метании гранаты?", options: ["взять гранату в руки", "вкрутить спусковой рычаг", "посмотреть себе под ноги", "осуществить бросок"], correct: 2},
-            
-            // Вопросы 86-107 (РПГ-7, деривация, строевая подготовка)
-            {question: "Что не является боевым свойством РПГ-7?", options: ["калибр оружия", "вид гранаты", "количество зарядов", "скорострельность"], correct: 0},
-            {question: "Что такое деривация?", options: ["отклонение пули от заданного направления движения", "отклонение пули в противоположную сторону ее движения", "отклонение пули в сторону ее вращения", "отсутствие отклонения пули"], correct: 2},
-            {question: "Сколько существует периодов выстрела?", options: ["4", "3", "6", "5"], correct: 0},
-            {question: "Что такое прямой выстрел?", options: ["попадание в цель", "выстрел мимо цели", "траектория не поднимается выше цели", "выстрел по цели"], correct: 2},
-            {question: "Что не является элементом траектории полета пули?", options: ["точка выстрела", "линия бросания", "горизонт оружия", "угол встречи"], correct: 2},
-            {question: "В чем заключается подготовка АК-74 к стрельбе?", options: ["в подсоединении магазина к АК-74", "в подсоединении снаряженного магазина к АК-74", "в подсоединении штык-ножа к АК-74", "в присоединении ремня к АК-74"], correct: 1},
-            {question: "Строевая подготовка --- один из важнейших предметов воинского обучения и воспитания, которая предполагает:", options: ["выработку дисциплинированности, аккуратности, умелого выполнения строевых приемов", "выработку строевой выправки, подтянутости, аккуратности, дисциплинированности, умелого и быстрого выполнения одиночных строевых приемов", "выработку подтянутости, умелого и быстрого выполнения одиночных строевых приемов", "выработку быстрого выполнения одиночных строевых приемов"], correct: 1},
-            {question: "Строй --- это установленное уставом:", options: ["размещение военнослужащих, подразделений и частей для их совместных действий в пешем порядке и на машинах", "размещение военнослужащих в подразделениях и частях для их совместных действий в расположении", "размещение военнослужащих, подразделений и частей на плащу, для совместных действий в пешем в строю", "размещение военнослужащих, подразделений и частей для их совместных действий в пешем порядке на полевых учениях"], correct: 0},
-            {question: "Фронт --- это сторона строя, в которую:", options: ["военнослужащие обращены спиной (машины --- кузовом)", "военнослужащие обращены правой стороной (машины --- правым боком)", "военнослужащие обращены лицом (машины --- лобовой частью)", "военнослужащие обращены левой стороной (машины --- левым боком)"], correct: 2},
-            {question: "Походный строй --- строй, в котором:", options: ["подразделение построено на дистанциях, установленных старшим начальником", "подразделение построены одно за другим для встречи старшего начальника", "подразделение построены одно за другим для движения в пешем строю", "подразделение построены одно за другим на дистанциях, установленных уставом или командиром"], correct: 3},
-            {question: "Предварительная команда подается:", options: ["чтобы находящиеся в строю поняли, каких действий от них требует командир", "чтобы находящиеся в строю поняли, что требует от них командир", "чтобы находящиеся в строю подразделения поняли, как следует действовать строю", "чтобы подразделения и части поняли, какие действия от них требуются"], correct: 0},
-            {question: "Военнослужащий обязан:", options: ["проверить исправность своего оружия, боеприпасов, средств индивидуальной защиты", "проверить исправность вооружения, военной и другой техники, средств коллективной защиты", "проверить исправность своего оружия, закрепленных за ним вооружения, военной и другой техники, боеприпасов, средств индивидуальной защиты", "проверить наличие имеющегося в подразделении оружия, обмундирования и снаряжения личного состава"], correct: 2},
-            {question: "Военнослужащий обязан:", options: ["соблюдать требования старших начальников", "знать свое место в строю", "знать требования безопасности", "в движении сохранять равнение, соблюдать дистанцию; требования безопасности"], correct: 3},
-            {question: "Походный строй применяется:", options: ["для передвижения подразделений при исполнении песни в строю на месте", "для расположения подразделений на ночь в полевых лагерях", "для передвижения подразделений в ночное время с песней, при утренней физической зарядке", "для передвижения подразделений при совершении марша, прохождения торжественным маршем, с песней"], correct: 3},
-            {question: "Направляющий --- это:", options: ["военнослужащий (подразделение, машина), движущийся в конце колонны в указанном направлении", "военнослужащий (подразделение, машина), движущийся головным в указанном направлении", "военнослужащий (подразделение, машина), опоздавший в строй и движущийся в указанном направлении", "группа военнослужащих, опоздавших в строй и догоняющих свое подразделение на указанном месте построения"], correct: 1},
-            {question: "Замыкающий --- это:", options: ["военнослужащий (подразделение, машина), движущийся головным в колонне", "военнослужащий (подразделение, машина), движущийся посередине колонны", "военнослужащий (подразделение, машина), движущийся впереди последнего в колонне", "военнослужащий (подразделение, машина), движущийся последним в колонне"], correct: 3},
-            {question: "Для поворота военнослужащего кругом, подается команда:", options: ["«Нале-Во!»", "«Кру-ГОМ!»", "«Напра-Во!»", "«Пол-оборота напра-Во!»"], correct: 1},
-            {question: "Движение походным шагом начинается по команде:", options: ["«Шагом --- МАРШ!»", "«Бегом --- МАРШ!»", "«Кругом --- МАРШ!»", "«СТАНОВИСЬ!»"], correct: 0},
-            {question: "Отделения на месте из одной шеренги в две производится по команде:", options: ["«Отделение, в три шеренги --- СТРОЙСЯ!»", "«Отделение, в одну шеренгу --- СТРОЙСЯ!»", "«Отделение, в две шеренги --- СТРОЙСЯ!»", "«Отделение, в четыре шеренги --- СТРОЙСЯ!»"], correct: 2},
-            {question: "Движение шагом осуществляется с темпом:", options: ["95 --- 105 шагов в минуту", "95 --- 100 шагов в минуту", "95 --- 110 шагов в минуту", "95 --- 115 шагов в минуту"], correct: 0},
-            {question: "Движение бегом в строю осуществляется с темпом:", options: ["65 --- 75 см", "68 --- 78 см", "60 --- 70 см", "65 --- 78 см"], correct: 2},
-            {question: "Движение бегом в строю осуществляются с темпом:", options: ["165 --- 175 шагов в минуту", "165 --- 180 шагов в минуту", "175 --- 185 шагов в минуту", "160 --- 175 шагов в минуту"], correct: 1},
-            
-            // Продолжение следует... (для краткости здесь представлена часть вопросов)
-            // В реальном файле будут все 200 вопросов
-        ];
+    <div class="about-visual">
+      <div class="about-card">
+        <h3>Наши принципы</h3>
+        <div class="value-list">
+          <div class="value-item">
+            <div class="value-dot"></div>
+            <p><strong style="color:var(--text-main)">Честность и прозрачность</strong> — открытость во всех деловых отношениях, соблюдение договорённостей.</p>
+          </div>
+          <div class="value-item">
+            <div class="value-dot"></div>
+            <p><strong style="color:var(--text-main)">Качество работы</strong> — ответственный подход к каждому проекту и клиенту.</p>
+          </div>
+          <div class="value-item">
+            <div class="value-dot"></div>
+            <p><strong style="color:var(--text-main)">Соблюдение сроков</strong> — чёткое выполнение обязательств в оговорённые сроки.</p>
+          </div>
+          <div class="value-item">
+            <div class="value-dot"></div>
+            <p><strong style="color:var(--text-main)">Клиентоориентированность</strong> — индивидуальный подход к каждому обращению.</p>
+          </div>
+          <div class="value-item">
+            <div class="value-dot"></div>
+            <p><strong style="color:var(--text-main)">Законность</strong> — полное соответствие законодательству Республики Казахстан.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // Текущее состояние теста
-        let currentQuestionIndex = -1;
-        let selectedOption = -1;
-        let answeredQuestions = 0;
-        let correctAnswers = 0;
-        let incorrectAnswers = 0;
-        let usedQuestions = new Set();
+<!-- ═══ SERVICES ═══ -->
+<section id="services">
+  <div class="section-header">
+    <div class="section-tag"><span>Деятельность</span></div>
+    <h2>Наши <em>услуги</em></h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#C49A2D" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0"/>
+        </svg>
+      </div>
+      <h3>Коммерческая деятельность</h3>
+      <p>Закупка, хранение и реализация товаров. Работа с поставщиками и заказчиками на условиях взаимной выгоды.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#C49A2D" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
+        </svg>
+      </div>
+      <h3>Услуги и работы</h3>
+      <p>Выполнение работ и оказание услуг для физических и юридических лиц. Подготовка договорной документации.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#C49A2D" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/>
+        </svg>
+      </div>
+      <h3>Документооборот и договоры</h3>
+      <p>Составление, согласование и заключение договоров. Ведение первичной документации в соответствии с нормами РК.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#C49A2D" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/>
+        </svg>
+      </div>
+      <h3>Партнёрство и сотрудничество</h3>
+      <p>Открыты к взаимовыгодному сотрудничеству с предприятиями и организациями Жамбылской области и всего Казахстана.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#C49A2D" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"/>
+        </svg>
+      </div>
+      <h3>Развитие и рост</h3>
+      <p>Постоянное расширение деятельности, освоение новых направлений, инвестиции в качество и профессионализм.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#C49A2D" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+        </svg>
+      </div>
+      <h3>Соответствие требованиям</h3>
+      <p>Полное соответствие требованиям налогового и гражданского законодательства РК. Работа с НДС, ЭСФ, отчётность.</p>
+    </div>
+  </div>
+</section>
 
-        // Элементы DOM
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const submitBtn = document.getElementById('submit-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const resultDiv = document.getElementById('result');
-        const answeredSpan = document.getElementById('answered');
-        const correctSpan = document.getElementById('correct');
-        const incorrectSpan = document.getElementById('incorrect');
-        const progressBar = document.getElementById('progress');
-        const completionMessage = document.getElementById('completion-message');
-        const finalCorrectSpan = document.getElementById('final-correct');
-        const totalQuestionsSpan = document.getElementById('total-questions');
-        const questionCounter = document.getElementById('question-counter');
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="section-header">
+    <div class="section-tag"><span>Контакты</span></div>
+    <h2>Свяжитесь <em>с нами</em></h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Реквизиты и адрес</h3>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#C49A2D" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+            </svg>
+          </div>
+          <div class="contact-item-text">
+            <span>Юридический адрес</span>
+            <p>Республика Казахстан, Жамбылская область,<br>г. Тараз, 2-й проезд Рахимова, д. 1А</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#C49A2D" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3"/>
+            </svg>
+          </div>
+          <div class="contact-item-text">
+            <span>Организационная форма</span>
+            <p>Индивидуальный предприниматель (ИП)<br>Зарегистрирован в РК</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#C49A2D" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div class="contact-item-text">
+            <span>Режим работы</span>
+            <p>Пн–Пт: 09:00 – 18:00<br>Сб–Вс: по договорённости</p>
+          </div>
+        </div>
+      </div>
 
-        // Устанавливаем общее количество вопросов
-        totalQuestionsSpan.textContent = allQuestions.length;
+      <div class="map-placeholder">
+        <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="#C49A2D" stroke-width="1.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+        </svg>
+        <p>г. Тараз, 2-й проезд Рахимова, д. 1А</p>
+        <a href="https://maps.google.com/?q=Тараз,+2-й+проезд+Рахимова+1А" target="_blank">Открыть на карте →</a>
+      </div>
+    </div>
 
-        function getRandomQuestion() {
-            if (usedQuestions.size >= allQuestions.length) {
-                showCompletionMessage();
-                return null;
-            }
+    <div class="contact-form-area">
+      <h3>Форма обратной связи</h3>
+      <div class="form-group">
+        <input type="text" placeholder="Ваше имя" id="cf-name">
+      </div>
+      <div class="form-group">
+        <input type="tel" placeholder="Номер телефона" id="cf-phone">
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="E-mail (необязательно)" id="cf-email">
+      </div>
+      <div class="form-group">
+        <textarea placeholder="Текст обращения..." id="cf-msg"></textarea>
+      </div>
+      <button class="btn-primary" onclick="submitForm()" style="width:100%; display:block; text-align:center;">Отправить обращение</button>
+      <p id="form-success" style="display:none; margin-top:14px; font-size:13px; color:#4CAF50; letter-spacing:1px;">✓ Сообщение отправлено. Мы свяжемся с вами.</p>
+    </div>
+  </div>
+</section>
 
-            let randomIndex;
-            do {
-                randomIndex = Math.floor(Math.random() * allQuestions.length);
-            } while (usedQuestions.has(randomIndex));
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p>© 2025 ИП «Куатты Күш» · г. Тараз, Казахстан. Все права защищены.</p>
+  <span class="footer-gold">Куатты Күш</span>
+</footer>
 
-            usedQuestions.add(randomIndex);
-            return { question: allQuestions[randomIndex], index: randomIndex };
-        }
+<!-- ═══ CHATBOT ═══ -->
+<button id="chat-btn" onclick="toggleChat()" title="Чат с нами">
+  <svg id="chat-icon" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#0E1117" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
+  </svg>
+</button>
 
-        function showQuestion() {
-            const result = getRandomQuestion();
-            if (!result) return;
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <div class="chat-avatar">КК</div>
+      <div class="chat-header-info">
+        <span class="chat-header-name">ИП Куатты Күш</span>
+        <span class="chat-header-status">Онлайн</span>
+      </div>
+    </div>
+    <button id="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="msg bot">
+      <div class="msg-bubble">Здравствуйте! Я виртуальный помощник ИП «Куатты Күш». Выберите вопрос или напишите сами — я помогу.</div>
+    </div>
+  </div>
+  <div class="chat-quick" id="chat-quick">
+    <div class="chat-quick-label">Частые вопросы</div>
+    <button class="quick-btn" onclick="quickAsk('Где вы находитесь?')">📍 Адрес</button>
+    <button class="quick-btn" onclick="quickAsk('Какие услуги вы предоставляете?')">⚙️ Услуги</button>
+    <button class="quick-btn" onclick="quickAsk('Как с вами связаться?')">📞 Контакты</button>
+    <button class="quick-btn" onclick="quickAsk('Как оформить сотрудничество?')">🤝 Сотрудничество</button>
+    <button class="quick-btn" onclick="quickAsk('Каков режим работы?')">🕐 Режим работы</button>
+    <button class="quick-btn" onclick="quickAsk('Вы работаете с юридическими лицами?')">🏢 Юр. лица</button>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chat-input" placeholder="Написать сообщение..." onkeydown="if(event.key==='Enter') sendMsg()">
+    <button id="chat-send" onclick="sendMsg()">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#0E1117" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.269 20.876L5.999 12zm0 0h7.5"/>
+      </svg>
+    </button>
+  </div>
+</div>
 
-            const question = result.question;
-            currentQuestionIndex = result.index;
-            
-            questionText.textContent = question.question;
-            optionsContainer.innerHTML = '';
-            selectedOption = -1;
-            
-            // Обновляем счетчик вопросов
-            questionCounter.textContent = `Вопрос ${usedQuestions.size} из ${allQuestions.length}`;
-            
-            // Сбрасываем состояние кнопок
-            submitBtn.disabled = true;
-            submitBtn.style.display = 'block';
-            nextBtn.style.display = 'none';
-            resultDiv.style.display = 'none';
+<script>
+  // ─── CHATBOT QA ───
+  const qa = [
+    {
+      keywords: ['адрес', 'находитесь', 'где', 'расположен', 'местонахождение', 'location'],
+      answer: '📍 Мы находимся по адресу:\n\nРеспублика Казахстан, Жамбылская область, г. Тараз, 2-й проезд Рахимова, дом 1А.\n\nВы можете найти нас на карте — ссылка в разделе «Контакты».'
+    },
+    {
+      keywords: ['услуг', 'чем занимает', 'деятельность', 'работаете', 'делаете', 'service'],
+      answer: '⚙️ ИП «Куатты Күш» осуществляет следующие виды деятельности:\n\n• Коммерческая деятельность (закупка, реализация товаров)\n• Выполнение работ и услуг\n• Документооборот и договорная работа\n• Партнёрство с юридическими и физическими лицами\n\nПодробнее — в разделе «Услуги».'
+    },
+    {
+      keywords: ['контакт', 'связат', 'телефон', 'номер', 'позвонит', 'написат', 'email', 'почта'],
+      answer: '📞 Для связи с нами воспользуйтесь формой обратной связи в разделе «Контакты».\n\nМы ответим в рабочее время: Пн–Пт с 09:00 до 18:00.'
+    },
+    {
+      keywords: ['сотрудничест', 'партнёр', 'договор', 'заключит', 'как начат'],
+      answer: '🤝 Для оформления сотрудничества:\n\n1. Оставьте заявку через форму обратной связи\n2. Мы свяжемся с вами и обсудим условия\n3. Подписываем договор в соответствии с законодательством РК\n\nБудем рады долгосрочному партнёрству!'
+    },
+    {
+      keywords: ['режим', 'часы', 'работает', 'время', 'график', 'рабочий'],
+      answer: '🕐 Режим работы ИП «Куатты Күш»:\n\n• Понедельник – Пятница: 09:00 – 18:00\n• Суббота – Воскресенье: по предварительной договорённости\n\nВ праздничные дни возможны изменения.'
+    },
+    {
+      keywords: ['юридическ', 'ТОО', 'АО', 'компания', 'организация', 'юр. лиц'],
+      answer: '🏢 Да, мы работаем как с юридическими лицами (ТОО, АО, ИП), так и с физическими лицами.\n\nВозможно заключение официальных договоров, выставление счетов-фактур и работа с ЭСФ.'
+    },
+    {
+      keywords: ['нал', 'безнал', 'оплата', 'платёж', 'счёт', 'эсф'],
+      answer: '💳 Мы принимаем как наличный, так и безналичный расчёт.\n\nДля юридических лиц предоставляем электронные счета-фактуры (ЭСФ) через информационную систему НК РК.'
+    },
+    {
+      keywords: ['казахстан', 'тараз', 'жамбыл', 'регион'],
+      answer: '🇰🇿 ИП «Куатты Күш» зарегистрировано и работает в г. Тараз, Жамбылская область, Республика Казахстан.\n\nМы готовы к сотрудничеству с партнёрами из других регионов Казахстана.'
+    },
+  ];
 
-            question.options.forEach((option, index) => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'option';
-                optionElement.textContent = option;
-                optionElement.addEventListener('click', () => selectOption(index));
-                optionsContainer.appendChild(optionElement);
-            });
+  function getBotAnswer(text) {
+    const lower = text.toLowerCase();
+    for (const item of qa) {
+      if (item.keywords.some(k => lower.includes(k))) {
+        return item.answer;
+      }
+    }
+    return 'Спасибо за ваш вопрос! Для получения подробной информации, пожалуйста, воспользуйтесь формой обратной связи в разделе «Контакты», и мы ответим вам в ближайшее время.';
+  }
 
-            updateProgress();
-        }
+  function addMsg(text, who) {
+    const el = document.createElement('div');
+    el.className = 'msg ' + who;
+    el.innerHTML = `<div class="msg-bubble">${text.replace(/\n/g, '<br>')}</div>`;
+    document.getElementById('chat-messages').appendChild(el);
+    document.getElementById('chat-messages').scrollTop = 9999;
+  }
 
-        function selectOption(index) {
-            selectedOption = index;
-            const options = document.querySelectorAll('.option');
-            options.forEach((opt, i) => {
-                opt.classList.toggle('selected', i === index);
-            });
-            submitBtn.disabled = false;
-        }
+  function quickAsk(q) {
+    addMsg(q, 'user');
+    setTimeout(() => addMsg(getBotAnswer(q), 'bot'), 500);
+  }
 
-        function checkAnswer() {
-            if (selectedOption === -1) return;
+  function sendMsg() {
+    const inp = document.getElementById('chat-input');
+    const val = inp.value.trim();
+    if (!val) return;
+    addMsg(val, 'user');
+    inp.value = '';
+    setTimeout(() => addMsg(getBotAnswer(val), 'bot'), 500);
+  }
 
-            const question = allQuestions[currentQuestionIndex];
-            const options = document.querySelectorAll('.option');
-            
-            options.forEach((opt, index) => {
-                opt.classList.remove('selected');
-                if (index === question.correct) {
-                    opt.classList.add('correct');
-                } else if (index === selectedOption && index !== question.correct) {
-                    opt.classList.add('incorrect');
-                }
-            });
+  function toggleChat() {
+    const win = document.getElementById('chat-window');
+    win.classList.toggle('open');
+  }
 
-            answeredQuestions++;
-            if (selectedOption === question.correct) {
-                correctAnswers++;
-                resultDiv.textContent = '✅ Правильно!';
-                resultDiv.className = 'result correct';
-            } else {
-                incorrectAnswers++;
-                resultDiv.textContent = '❌ Неправильно!';
-                resultDiv.className = 'result incorrect';
-            }
-
-            resultDiv.style.display = 'block';
-            submitBtn.style.display = 'none';
-            nextBtn.style.display = 'block';
-
-            updateStats();
-            updateProgress();
-        }
-
-        function updateStats() {
-            answeredSpan.textContent = answeredQuestions;
-            correctSpan.textContent = correctAnswers;
-            incorrectSpan.textContent = incorrectAnswers;
-        }
-
-        function updateProgress() {
-            const progress = (answeredQuestions / allQuestions.length) * 100;
-            progressBar.style.width = `${progress}%`;
-        }
-
-        function showCompletionMessage() {
-            document.getElementById('question-card').style.display = 'none';
-            document.querySelector('.controls').style.display = 'none';
-            completionMessage.style.display = 'block';
-            finalCorrectSpan.textContent = correctAnswers;
-        }
-
-        function restartQuiz() {
-            currentQuestionIndex = -1;
-            selectedOption = -1;
-            answeredQuestions = 0;
-            correctAnswers = 0;
-            incorrectAnswers = 0;
-            usedQuestions.clear();
-
-            document.getElementById('question-card').style.display = 'block';
-            document.querySelector('.controls').style.display = 'flex';
-            completionMessage.style.display = 'none';
-            submitBtn.style.display = 'block';
-            nextBtn.style.display = 'none';
-            questionCounter.style.display = 'block';
-
-            updateStats();
-            updateProgress();
-            showQuestion();
-        }
-
-        // Инициализация
-        submitBtn.addEventListener('click', checkAnswer);
-        nextBtn.addEventListener('click', showQuestion);
-        
-        // Показываем первый вопрос при загрузке
-        showQuestion();
-    </script>
+  function submitForm() {
+    const name = document.getElementById('cf-name').value.trim();
+    const phone = document.getElementById('cf-phone').value.trim();
+    if (!name || !phone) {
+      alert('Пожалуйста, заполните имя и телефон.');
+      return;
+    }
+    document.getElementById('form-success').style.display = 'block';
+    document.getElementById('cf-name').value = '';
+    document.getElementById('cf-phone').value = '';
+    document.getElementById('cf-email').value = '';
+    document.getElementById('cf-msg').value = '';
+    setTimeout(() => { document.getElementById('form-success').style.display = 'none'; }, 5000);
+  }
+</script>
 </body>
 </html>
